@@ -1,6 +1,6 @@
-# vue-template-inheritance-loader
+# vue-inheritance-loader
 
-It's a long name, but pretty self explanatory. It's a webpack loader to be used along `vue-loader` for **Single File Components** that provides template extension.
+Webpack loader to be used along with `vue-loader` for **Single File Components** that provides template extension.
 
 In Vue its possible to extend the component's controller using the [extends](https://vuejs.org/v2/api/#extends) option, which merges the data, methods, computed properties, etc. Its also possible to extend a component's template with the use of [slots](https://vuejs.org/v2/guide/components-slots.html). But in some cases where there's the need for tightly coupled components, where we want them to be a single entity but we want to reuse both template and controller logic, `extends` and `slot` aren't enough and can lead to cumbersome code. 
 
@@ -10,7 +10,7 @@ In Vue its possible to extend the component's controller using the [extends](htt
 
 Install it onto your project with `npm install`
 ```
-npm install --save-dev vue-template-inheritance-loader
+npm install --save-dev vue-inheritance-loader
 ```
 
 You have to add it to your webpack configuration and it has to execute before `vue-loader`, for example with this config in your `vue.config.js`:

@@ -20,7 +20,7 @@ let options = null;
 
 module.exports = function (source, map) {
   options = {...defaultOptions, ...getOptions(this)};
-  validateOptions(schema, options, 'vue-template-inheritance-loader');
+  validateOptions(schema, options, 'vue-inheritance-loader');
 
   let callback = this.async();
   resolveComponent(source, this).then((finalComponent) => {

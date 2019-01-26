@@ -2,7 +2,7 @@
   "definitions": {},
   "$id": "http://example.com/root.json",
   "type": "object",
-  "description": "Options for vue-template-inheritance-loader",
+  "description": "Options for vue-inheritance-loader",
   "default": null,
   "required": [
     "EXT_POINT_TAG",
