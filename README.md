@@ -21,7 +21,7 @@ module.exports = {
       rules: [
         {
           test: /\.vue$/,
-          loader: ['./extension-loader.js']
+          loader: ['vue-inheritance-loader']
         }
       ]
     }
