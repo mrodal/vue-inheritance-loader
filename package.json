@@ -1,0 +1,36 @@
+{
+  "name": "vue-template-inheritance-loader",
+  "version": "0.1.0",
+  "description": "Loader to provide template inheritance in Vue's Single File Components",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/mrodal/vue-template-inheritance-loader.git"
+  },
+  "keywords": [
+    "vue",
+    "vuejs",
+    "loader",
+    "single",
+    "file",
+    "component",
+    "inheritance",
+    "template",
+    "extend"
+  ],
+  "author": "Matias Rodal (@mrodal)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mrodal/vue-template-inheritance-loader/issues"
+  },
+  "homepage": "https://github.com/mrodal/vue-template-inheritance-loader#readme",
+  "dependencies": {
+    "htmlparser2": "^3.10.0"
+  },
+  "peerDependencies": {
+    "vue-loader": "^15.6.0",
+    "vue-template-compiler": "^2.5.21",
+    "@vue/component-compiler-utils": "^2.4.0"
+  }
+}
