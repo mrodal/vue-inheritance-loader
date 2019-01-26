@@ -1,0 +1,88 @@
+{
+  "definitions": {},
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "description": "Options for vue-template-inheritance-loader",
+  "default": null,
+  "required": [
+    "EXT_POINT_TAG",
+    "EXTENSIONS_TAG",
+    "EXTENSION_TAG",
+    "EXT_POINT_NAME_ATTR",
+    "EXT_POINT_REF_ATTR",
+    "EXTENDABLE_ATTR",
+    "EXTENDS_ATTR"
+  ],
+  "properties": {
+    "EXT_POINT_TAG": {
+      "$id": "#/properties/EXT_POINT_TAG",
+      "type": "string",
+      "title": "The Ext_point_tag Schema",
+      "default": "",
+      "examples": [
+        "extension-point"
+      ],
+      "pattern": "^[a-zA-Z][\\w-_]*$"
+    },
+    "EXTENSIONS_TAG": {
+      "$id": "#/properties/EXTENSIONS_TAG",
+      "type": "string",
+      "title": "The Extensions_tag Schema",
+      "default": "",
+      "examples": [
+        "extensions"
+      ],
+      "pattern": "^[a-zA-Z][\\w-_]*$"
+    },
+    "EXTENSION_TAG": {
+      "$id": "#/properties/EXTENSION_TAG",
+      "type": "string",
+      "title": "The Extension_tag Schema",
+      "default": "",
+      "examples": [
+        "extension"
+      ],
+      "pattern": "^[a-zA-Z][\\w-_]*$"
+    },
+    "EXT_POINT_NAME_ATTR": {
+      "$id": "#/properties/EXT_POINT_NAME_ATTR",
+      "type": "string",
+      "title": "The Ext_point_name_attr Schema",
+      "default": "",
+      "examples": [
+        "name"
+      ],
+      "pattern": "^[a-zA-Z][\\w-_]*$"
+    },
+    "EXT_POINT_REF_ATTR": {
+      "$id": "#/properties/EXT_POINT_REF_ATTR",
+      "type": "string",
+      "title": "The Ext_point_ref_attr Schema",
+      "default": "",
+      "examples": [
+        "point"
+      ],
+      "pattern": "^[a-zA-Z][\\w-_]*$"
+    },
+    "EXTENDABLE_ATTR": {
+      "$id": "#/properties/EXTENDABLE_ATTR",
+      "type": "string",
+      "title": "The EXTENDABLE_ATTR Schema",
+      "default": "",
+      "examples": [
+        "extendable"
+      ],
+      "pattern": "^[a-zA-Z][\\w-_]*$"
+    },
+    "EXTENDS_ATTR": {
+      "$id": "#/properties/EXTENDS_ATTR",
+      "type": "string",
+      "title": "The EXTENDS_ATTR Schema",
+      "default": "",
+      "examples": [
+        "extends"
+      ],
+      "pattern": "^[a-zA-Z][\\w-_]*$"
+    }
+  }
+}
