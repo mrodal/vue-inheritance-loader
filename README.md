@@ -115,6 +115,7 @@ To make MapWidget's **template** extend from BaseWidget's, the following is need
 </script>
 ```
 
+This way you can access everything in BaseWidget from MapWidget as if they were the same component (they actually are in the resulting code).
 
 
 ## Contributing
