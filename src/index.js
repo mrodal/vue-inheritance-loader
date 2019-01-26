@@ -31,14 +31,17 @@ module.exports = function (source, map) {
       finalDescriptor.script.content = finalDescriptor.script.content.replace(/^(\/\/\n)+/, '')
     }
 
-    // Change all extension points to <template> on the final resolved component to display fallback content
+    // Change all extension points to <template> on the final component to display fallback content
     if (finalDescriptor.template.attrs[options.EXTENDABLE_ATTR]) {
       let finalDom = htmlparser.parseDOM(finalDescriptor.template.content);
       findDomElementsByTagName(finalDom, options.EXT_POINT_TAG).forEach(ext => {
         ext.name = 'template';
         delete ext.attribs[options.EXT_POINT_NAME_ATTR]
       });
-      finalComponent = `<template>${htmlparser.DomUtils.getOuterHTML(finalDom)}</template> ${descriptorToHTML(finalDescriptor)}`;
+      finalComponent = `<template>
+                          ${htmlparser.DomUtils.getOuterHTML(finalDom)}
+                        </template> 
+                        ${descriptorToHTML(finalDescriptor)}`;
     }
 
     callback(null,
@@ -53,32 +56,52 @@ function resolveComponent(currentSource, context) {
   return new Promise((resolve, reject) => {
     try {
       let currentDesc = toDescriptor(currentSource);
+
+      // If the component extends another, resolve its source merging it with the base component
+      // else return code as is
       if (currentDesc.template.attrs[options.EXTENDS_ATTR]) {
-        let baseAbsolutePath = path.join(context.context, currentDesc.template.attrs[options.EXTENDS_ATTR]);
+        let baseRelPath = currentDesc.template.attrs[options.EXTENDS_ATTR];
+        let baseAbsPath = path.join(context.context, baseRelPath);
 
-        context.addDependency(baseAbsolutePath);
+        // To make HMR aware of the base file and reload it when it changes
+        context.addDependency(baseAbsPath);
 
-        fs.readFile(baseAbsolutePath, 'utf8', (err, contents) => {
+        fs.readFile(baseAbsPath, 'utf8', (err, contents) => {
+          // File read error, reject
+          if (err) reject(err);
+
+          // Resolve the base component recursively to support inheritance in N levels
           resolveComponent(contents, context).then((resolvedComponent) => {
             try {
               let baseDescriptor = toDescriptor(resolvedComponent);
-              let baseDom = htmlparser.parseDOM(baseDescriptor.template.content);
 
+              let baseDom = htmlparser.parseDOM(baseDescriptor.template.content);
               let currentDom = htmlparser.parseDOM(currentDesc.template.content);
+
+              // Get all the child's component extensions
               let extensions = currentDom.find(node => node.type = 'tag' && node.name === options.EXTENSIONS_TAG).children
                 .filter(node => node.type = 'tag' && node.name === options.EXTENSION_TAG);
-              findDomElementsByTagName(baseDom, options.EXT_POINT_TAG).forEach(extPoint => {
-                let extendingBlock = extensions.find(node => node.attribs[options.EXT_POINT_REF_ATTR] === extPoint.attribs[options.EXT_POINT_NAME_ATTR]);
 
-                if (extendingBlock) {
-                  extPoint.children = extendingBlock.children;
+              // Replace each of the Base component's extension points with the child's extensions
+              findDomElementsByTagName(baseDom, options.EXT_POINT_TAG).forEach(extPoint => {
+                // Find the extend block for the current extension point
+                let extendBlock = extensions.find(node => node.attribs[options.EXT_POINT_REF_ATTR] === extPoint.attribs[options.EXT_POINT_NAME_ATTR]);
+
+                // If a extend block matching the extension point was found, replace the point's content with the extend block's
+                if (extendBlock) {
+                  extPoint.children = extendBlock.children;
                 }
 
-                // Change extension point tag to a template
+                // Change extension point tag to a template tag
                 extPoint.name = 'template';
                 delete extPoint.attribs[options.EXT_POINT_NAME_ATTR];
               });
-              resolve(`<template ${options.EXTENDABLE_ATTR}>${htmlparser.DomUtils.getOuterHTML(baseDom)}</template> ${descriptorToHTML(currentDesc)}`);
+
+              // Resolve promise with the new generated SFC
+              resolve(`<template ${options.EXTENDABLE_ATTR}>
+                         ${htmlparser.DomUtils.getOuterHTML(baseDom)}
+                       </template> 
+                       ${descriptorToHTML(currentDesc)}`);
             } catch (e) {
               reject(e)
             }
@@ -95,6 +118,10 @@ function resolveComponent(currentSource, context) {
   })
 }
 
+/**
+ * Returns the SFC descriptor for a given SFC sourcecode
+ * @param source
+ */
 function toDescriptor(source) {
   return parse({
     source: source,
@@ -107,6 +134,11 @@ function findDomElementsByTagName(dom, tag) {
   return htmlparser.DomUtils.findAll(node => (node.type === 'tag' && node.name === tag), dom)
 }
 
+/**
+ * Given a SFC's descriptor, returns the SFC's source **without** the template part
+ * @param descriptor - SFC descriptor
+ * @returns {string} - SFC source code
+ */
 function descriptorToHTML(descriptor) {
   return descriptor.customBlocks
       .filter(cb => cb.type !== options.EXTENSION_TAG)
