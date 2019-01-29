@@ -33,7 +33,7 @@ module.exports = function (source, map) {
 
     // Change all extension points to <template> on the final component to display fallback content
     if (finalDescriptor.template && finalDescriptor.template.attrs[options.EXTENDABLE_ATTR]) {
-      let finalDom = htmlparser.parseDOM(finalDescriptor.template.content);
+      let finalDom = parseDOM(finalDescriptor.template.content);
       findDomElementsByTagName(finalDom, options.EXT_POINT_TAG).forEach(ext => {
         ext.name = 'template';
         delete ext.attribs[options.EXT_POINT_NAME_ATTR]
@@ -75,8 +75,8 @@ function resolveComponent(currentSource, context) {
             try {
               let baseDescriptor = toDescriptor(resolvedComponent);
 
-              let baseDom = htmlparser.parseDOM(baseDescriptor.template.content);
-              let currentDom = htmlparser.parseDOM(currentDesc.template.content);
+              let baseDom = parseDOM(baseDescriptor.template.content);
+              let currentDom = parseDOM(currentDesc.template.content);
 
               // Get all the child's component extensions
               let extensions = currentDom.find(node => node.type = 'tag' && node.name === options.EXTENSIONS_TAG).children
@@ -116,6 +116,15 @@ function resolveComponent(currentSource, context) {
       reject(e)
     }
   })
+}
+
+/**
+ * Returns the SFC descriptor for a given SFC sourcecode
+ * @param source
+ */
+function parseDOM(source) {
+  // Use recognizeSelfClosing option to handle tags like <spacer />
+  return htmlparser.parseDOM(source, {recognizeSelfClosing:true});
 }
 
 /**
