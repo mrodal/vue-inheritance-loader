@@ -1,6 +1,6 @@
 {
   "name": "vue-inheritance-loader",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Loader to provide template inheritance in Vue's Single File Components",
   "main": "./src/index.js",
   "scripts": {},
