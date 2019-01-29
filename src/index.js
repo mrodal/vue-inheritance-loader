@@ -90,11 +90,11 @@ function resolveComponent(currentSource, context) {
                 // If a extend block matching the extension point was found, replace the point's content with the extend block's
                 if (extendBlock) {
                   extPoint.children = extendBlock.children;
-                }
 
-                // Change extension point tag to a template tag
-                extPoint.name = 'template';
-                delete extPoint.attribs[options.EXT_POINT_NAME_ATTR];
+                  // Change extension point tag to a template tag
+                  extPoint.name = 'template';
+                  delete extPoint.attribs[options.EXT_POINT_NAME_ATTR];
+                }
               });
 
               // Resolve promise with the new generated SFC
