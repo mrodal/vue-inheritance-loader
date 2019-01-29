@@ -32,7 +32,7 @@ module.exports = function (source, map) {
     }
 
     // Change all extension points to <template> on the final component to display fallback content
-    if (finalDescriptor.template.attrs[options.EXTENDABLE_ATTR]) {
+    if (finalDescriptor.template && finalDescriptor.template.attrs[options.EXTENDABLE_ATTR]) {
       let finalDom = htmlparser.parseDOM(finalDescriptor.template.content);
       findDomElementsByTagName(finalDom, options.EXT_POINT_TAG).forEach(ext => {
         ext.name = 'template';
@@ -59,7 +59,7 @@ function resolveComponent(currentSource, context) {
 
       // If the component extends another, resolve its source merging it with the base component
       // else return code as is
-      if (currentDesc.template.attrs[options.EXTENDS_ATTR]) {
+      if (currentDesc.template && currentDesc.template.attrs[options.EXTENDS_ATTR]) {
         let baseRelPath = currentDesc.template.attrs[options.EXTENDS_ATTR];
         let baseAbsPath = path.join(context.context, baseRelPath);
 
