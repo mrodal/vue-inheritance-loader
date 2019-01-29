@@ -124,7 +124,8 @@ function resolveComponent(currentSource, context) {
  */
 function parseDOM(source) {
   // Use recognizeSelfClosing option to handle tags like <spacer />
-  return htmlparser.parseDOM(source, {recognizeSelfClosing:true});
+  // Disable lowerCaseTags option to avoid turning things like MyComponent to mycomponent
+  return htmlparser.parseDOM(source, {recognizeSelfClosing:true, lowerCaseTags: false});
 }
 
 /**
