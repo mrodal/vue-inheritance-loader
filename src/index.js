@@ -16,7 +16,7 @@ const defaultOptions = {
   EXTENDABLE_ATTR: 'extendable',
   EXTENDS_ATTR: 'extends'
 };
-let options = null;
+let options = defaultOptions;
 
 const loader = function (source, map) {
   options = {...defaultOptions, ...getOptions(this)};
@@ -187,4 +187,5 @@ function blockToHTML(block) {
 }
 
 
-module.exports = loader
+exports.default = loader
+exports.resolve = getMergedCode

@@ -6,7 +6,7 @@
   "scripts": {},
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/mrodal/vue-inheritance-loader.git"
+    "url": "https://github.com/mrodal/vue-inheritance-loader.git"
   },
   "keywords": [
     "vue",

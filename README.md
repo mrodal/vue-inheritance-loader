@@ -117,6 +117,9 @@ To make MapWidget's **template** extend from BaseWidget's, the following is need
 
 This way you can access everything in BaseWidget from MapWidget as if they were the same component (they actually are in the resulting code).
 
+## Jest support
+Jest support is provided through [vue-inheritance-loader-jest](https://github.com/mrodal/vue-inheritance-loader-jest).
+
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
