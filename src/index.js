@@ -78,22 +78,25 @@ function resolveComponent(currentSource, currPath, aliases) {
       if (currentDesc.template && currentDesc.template.attrs[options.EXTENDS_ATTR]) {
         let baseRelPath = currentDesc.template.attrs[options.EXTENDS_ATTR];
         let baseRelPathParts = baseRelPath.split(/[\/\\]/);
+        if (baseRelPath.substr(-4).toLowerCase() != '.vue') {
+          baseRelPath = baseRelPath + '.vue';
+        }
 
         // If there's a matching alias, use it. If not, use the context path
         // __fromJest is a flag inserted on vue-inheritance-loader-jest
-        if(aliases['__fromJest']){
+        if (aliases['__fromJest']) {
           var matchingAlias = Object.keys(aliases).find(k => {
             let regex = new RegExp(k);
             return regex.test(baseRelPath);
           });
-        }else{
+        } else {
           var matchingAlias = Object.keys(aliases).find(k => baseRelPathParts[0] === k);
         }
 
         if (matchingAlias) {
-          if(aliases['__fromJest']){
+          if (aliases['__fromJest']) {
             var baseAbsPath = baseRelPath.replace(new RegExp(matchingAlias), aliases[matchingAlias])
-          }else{
+          } else {
             baseRelPathParts.shift();
             baseRelPath = baseRelPathParts.join('/');
             var baseAbsPath = path.join(aliases[matchingAlias], baseRelPath);
