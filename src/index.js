@@ -80,11 +80,24 @@ function resolveComponent(currentSource, currPath, aliases) {
         let baseRelPathParts = baseRelPath.split(/[\/\\]/);
 
         // If there's a matching alias, use it. If not, use the context path
-        let matchingAlias = Object.keys(aliases).find(k => baseRelPathParts[0] === k);
+        // __fromJest is a flag inserted on vue-inheritance-loader-jest
+        if(aliases['__fromJest']){
+          var matchingAlias = Object.keys(aliases).find(k => {
+            let regex = new RegExp(k);
+            return regex.test(baseRelPath);
+          });
+        }else{
+          var matchingAlias = Object.keys(aliases).find(k => baseRelPathParts[0] === k);
+        }
+
         if (matchingAlias) {
-          baseRelPathParts.shift();
-          baseRelPath = baseRelPathParts.join('/');
-          var baseAbsPath = path.join(aliases[matchingAlias], baseRelPath);
+          if(aliases['__fromJest']){
+            var baseAbsPath = baseRelPath.replace(new RegExp(matchingAlias), aliases[matchingAlias])
+          }else{
+            baseRelPathParts.shift();
+            baseRelPath = baseRelPathParts.join('/');
+            var baseAbsPath = path.join(aliases[matchingAlias], baseRelPath);
+          }
         } else {
           var baseAbsPath = path.join(currPath, baseRelPath);
         }
