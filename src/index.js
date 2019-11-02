@@ -77,10 +77,10 @@ function resolveComponent(currentSource, currPath, aliases) {
       // else return code as is
       if (currentDesc.template && currentDesc.template.attrs[options.EXTENDS_ATTR]) {
         let baseRelPath = currentDesc.template.attrs[options.EXTENDS_ATTR];
-        let baseRelPathParts = baseRelPath.split(/[\/\\]/);
         if (baseRelPath.substr(-4).toLowerCase() != '.vue') {
           baseRelPath = baseRelPath + '.vue';
         }
+        let baseRelPathParts = baseRelPath.split(/[\/\\]/);
 
         // If there's a matching alias, use it. If not, use the context path
         // __fromJest is a flag inserted on vue-inheritance-loader-jest
