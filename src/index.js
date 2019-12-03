@@ -23,7 +23,7 @@ const loader = function (source, map) {
   validateOptions(schema, options, 'vue-inheritance-loader');
 
   let callback = this.async();
-  let aliases;
+  let aliases = {};
   if (this._compiler) {
     aliases = this._compiler.options.resolve.alias;
   }
