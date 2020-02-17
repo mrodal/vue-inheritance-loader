@@ -23,7 +23,10 @@ const loader = function (source, map) {
   validateOptions(schema, options, 'vue-inheritance-loader');
 
   let callback = this.async();
-  let aliases = this._compiler.options.resolve.alias;
+  let aliases = {};
+  if (this._compiler) {
+    aliases = this._compiler.options.resolve.alias;
+  }
   getMergedCode(source, this.context, aliases).then(result => {
     // To make HMR aware of the base file and reload it when it changes
     result.ancestorsPaths.forEach(ancestor => {
