@@ -11,6 +11,7 @@ const defaultOptions = {
   EXT_POINT_TAG: 'extension-point',
   EXTENSIONS_TAG: 'extensions',
   EXTENSION_TAG: 'extension',
+  SUPER_TAG: 'extension-super',
   EXT_POINT_NAME_ATTR: 'name',
   EXT_POINT_REF_ATTR: 'point',
   EXTENDABLE_ATTR: 'extendable',
@@ -135,7 +136,13 @@ function resolveComponent(currentSource, currPath, aliases) {
 
                 // If a extend block matching the extension point was found, replace the point's content with the extend block's
                 if (extendBlock) {
+                  let defaultContent = extPoint.children;
                   extPoint.children = extendBlock.children;
+
+                  findDomElementsByTagName(extPoint.children, options.SUPER_TAG).forEach(zuper=>{
+                    zuper.name = 'template';
+                    zuper.children = defaultContent;
+                  });
 
                   // Change extension point tag to a template tag
                   extPoint.name = 'template';
