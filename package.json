@@ -1,6 +1,6 @@
 {
   "name": "vue-inheritance-loader",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Loader to provide template inheritance in Vue's Single File Components",
   "main": "./src/index.js",
   "scripts": {},
@@ -26,11 +26,13 @@
   },
   "homepage": "https://github.com/mrodal/vue-inheritance-loader#readme",
   "dependencies": {
-    "htmlparser2": "^4.1.0"
+    "htmlparser2": "^6.0.0"
   },
   "peerDependencies": {
-    "vue-loader": "^15.9.1",
-    "vue-template-compiler": "^2.6.11",
-    "@vue/component-compiler-utils": "^3.1.2"
+    "@vue/component-compiler-utils": "^3.2.0",
+    "loader-utils": "^2.0.0",
+    "schema-utils": "^3.0.0",
+    "vue-loader": "^15.9.6",
+    "vue-template-compiler": "^2.6.12"
   }
 }
