@@ -54,8 +54,9 @@ const getMergedCode = async function (Source, basePath, aliases, context) {
       ext.name = "template";
       delete ext.attribs[options.EXT_POINT_NAME_ATTR];
     });
+    const block = htmlparser.DomUtils.getOuterHTML(finalDom, {encodeEntities: false, xmlMode: false, decodeEntities: false});
     source = `<template>
-                ${htmlparser.DomUtils.getOuterHTML(finalDom)}
+                ${block}
               </template> 
               ${descriptorToHTML(finalDescriptor)}`;
   }
@@ -106,7 +107,7 @@ let processComponent = async (baseAbsPath, aliases, currentDesc, context) => {
   // Resolve promise with the new generated SFC
   return {
     source: `<template ${options.EXTENDABLE_ATTR}>
-               ${htmlparser.DomUtils.getOuterHTML(baseDom)}
+               ${htmlparser.DomUtils.getOuterHTML(baseDom, {encodeEntities: false, xmlMode: false, decodeEntities: false})}
              </template> 
              ${descriptorToHTML(currentDesc)}`,
     ancestorsPaths
@@ -161,7 +162,7 @@ const parseDOM = source =>
  */
 const toDescriptor = source =>
   parse({
-    source: source,
+    source,
     compiler,
     needMap: false
   });
